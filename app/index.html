@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonida Platinum Atlas — GTA VI Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline fan guide and tracker for all 55 PlayStation 5 trophies of Grand Theft Auto VI: checklist with saved progress, roadmap to the platinum, missable flags and cited guides.">
+<link rel="stylesheet" href="css/guide.css">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+</head>
+<body>
+<div class="sky" aria-hidden="true">
+  <div class="sun"></div>
+  <svg class="palms" viewBox="0 0 1200 120" preserveAspectRatio="none" focusable="false">
+    <path d="M0 120 L0 92 Q120 78 260 88 T560 84 T880 90 T1200 82 L1200 120 Z" fill="#0b0a16"/>
+    <g stroke="#0b0a16" stroke-width="5" fill="none" stroke-linecap="round">
+      <path d="M120 92 Q116 58 104 44 M104 44 Q84 34 66 40 M104 44 Q96 26 82 20 M104 44 Q116 24 132 22 M104 44 Q124 36 140 44"/>
+      <path d="M1060 90 Q1066 54 1080 40 M1080 40 Q1100 30 1118 38 M1080 40 Q1088 22 1102 16 M1080 40 Q1068 22 1052 20 M1080 40 Q1060 32 1046 42"/>
+    </g>
+  </svg>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <h1>Leonida Platinum Atlas</h1>
+    <p class="tagline">Grand Theft Auto VI &middot; PlayStation 5 trophy guide &amp; tracker &middot; fan-made, works offline</p>
+  </div>
+  <div class="scoreboard" role="status" aria-label="Your progress">
+    <div class="bigcount"><span id="earnedCount">0</span><span class="of">/55</span></div>
+    <div class="score-meta">
+      <div class="bar" aria-hidden="true"><div id="earnedBar" class="bar-fill"></div></div>
+      <div id="earnedPct" class="pct">0% earned</div>
+      <div id="gradeLine" class="gradeline">1 platinum &middot; 2 gold &middot; 6 silver &middot; 46 bronze</div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Views">
+  <a href="#/checklist" data-route="checklist" class="tab is-active">Checklist</a>
+  <a href="#/roadmap" data-route="roadmap" class="tab">Roadmap</a>
+  <a href="#/missables" data-route="missables" class="tab">Missables <span id="missableBadge" class="badge">6</span></a>
+  <a href="#/next" data-route="next" class="tab">Next up</a>
+  <a href="#/save" data-route="save" class="tab">Save &amp; settings</a>
+</nav>
+
+<main id="appMain">
+  <section id="view-checklist" class="view">
+    <div class="toolbar" role="search">
+      <label class="searchbox">
+        <span class="sr-only">Search trophies</span>
+        <input id="searchInput" type="search" placeholder="Search trophies&hellip;  ( / )" autocomplete="off">
+      </label>
+      <div class="chips" id="kindChips" role="group" aria-label="Filter by kind">
+        <button type="button" data-kind="all" class="chip is-on">All</button>
+        <button type="button" data-kind="story" class="chip">Story</button>
+        <button type="button" data-kind="missable" class="chip">Missable</button>
+        <button type="button" data-kind="collectibles" class="chip">Collectibles</button>
+        <button type="button" data-kind="activities" class="chip">Activities</button>
+        <button type="button" data-kind="completion" class="chip">Completion</button>
+      </div>
+      <label class="pick">Grade
+        <select id="gradePick">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="pick">Status
+        <select id="statusPick">
+          <option value="all">All</option>
+          <option value="earned">Earned</option>
+          <option value="remaining">Remaining</option>
+        </select>
+      </label>
+      <label class="switch">
+        <input id="spoilerToggle" type="checkbox">
+        <span>Spoiler-free</span>
+      </label>
+    </div>
+    <p id="listSummary" class="summary" role="status"></p>
+    <div class="split">
+      <ol id="trophyList" class="trophies"></ol>
+      <article id="detailPane" class="detail" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <h2 class="viewtitle">Roadmap to the platinum</h2>
+    <p class="viewnote">Built from the official trophy descriptions: story chapters first while the missable windows are open, then strangers, activities and crime, collectibles and exploration, money and property, and finally 100% completion. Stages check off as you earn their trophies.</p>
+    <div id="roadmapStages"></div>
+  </section>
+
+  <section id="view-missables" class="view" hidden>
+    <h2 class="viewtitle">Missable trophies</h2>
+    <p class="viewnote">Flagged from the official descriptions alone: each of these is tied to a one-time story beat, a choice, a named character&rsquo;s request or a single strange event. The flag basis is stated in every guide. Keep rotating manual saves before story missions and you can always reload.</p>
+    <div id="missableList"></div>
+  </section>
+
+  <section id="view-next" class="view" hidden>
+    <h2 class="viewtitle">Next up</h2>
+    <p class="viewnote">Your next trophies in roadmap order — earliest unfinished stage first, missables before anything else in their stage. Tick one off and the list refills.</p>
+    <div id="nextList"></div>
+  </section>
+
+  <section id="view-save" class="view" hidden>
+    <h2 class="viewtitle">Save &amp; settings</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Your progress</h3>
+        <p>Progress is saved in this browser (localStorage) as you tick trophies, move counters and write notes. Nothing leaves your machine — this guide makes no network requests.</p>
+        <div id="saveStats" class="savestats"></div>
+      </div>
+      <div class="card">
+        <h3>Export &amp; import</h3>
+        <p>Export your checklist to a JSON file, and import it back on any machine. Import replaces the current progress after a confirmation.</p>
+        <div class="row">
+          <button id="exportBtn" type="button" class="btn">Export progress (.json)</button>
+          <label class="btn filebtn">Import progress
+            <input id="importInput" type="file" accept="application/json,.json" hidden>
+          </label>
+        </div>
+        <p id="importMsg" class="msg" role="status"></p>
+      </div>
+      <div class="card">
+        <h3>Spoiler setting</h3>
+        <p>Spoiler-free mode hides the names and descriptions of story trophies until you earn them, so the checklist never spoils a chapter you have not reached.</p>
+        <label class="switch">
+          <input id="spoilerToggle2" type="checkbox">
+          <span>Spoiler-free mode</span>
+        </label>
+      </div>
+      <div class="card">
+        <h3>Reset</h3>
+        <p>Clear every tick, counter and note and start the hunt again. Export first if you want to keep a copy.</p>
+        <button id="resetBtn" type="button" class="btn danger">Reset all progress</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <p><strong>Sources.</strong> Trophy names, descriptions and grades: the official PlayStation 5 list as published by
+  <a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/" rel="noopener">Exophase</a> and
+  <a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi" rel="noopener">PSNProfiles</a> (list frozen 2026-11-18; the two agree on every name, description and grade).
+  Tracked counts (250 stunts, 42 shooting-range challenges, 100 WAiNK locations&hellip;) are PSN&rsquo;s, via PSNProfiles.
+  Every guide is original text written for this fan guide from the official description — confirm exact spots in-game. No Rockstar Games logos, artwork or screenshots are used; the look is this guide&rsquo;s own.
+  The official list has no online trophies, so there is no online filter. Links open only when you follow them; the app itself fetches nothing.</p>
+  <p class="keys">Keys: <kbd>/</kbd> search &middot; <kbd>&uarr;</kbd><kbd>&darr;</kbd> move &middot; <kbd>Enter</kbd> open guide &middot; <kbd>Space</kbd> tick earned</p>
+</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
